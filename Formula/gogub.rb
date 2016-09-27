@@ -7,8 +7,22 @@ class Gogub < Formula
   depends_on "go" => :build
 
   def install
-    system "gobuild.sh"
-    bin.install ".gobuild/bin/gub" => "gub"
+    ENV["GOPATH"] = buildpath
+
+    # set up clearbit package
+    (buildpath/"src/github.com/owahab/gogub").install Dir["*"]
+
+    # set up dependencies
+    Language::Go.stage_deps resources, buildpath/"src"
+
+    # install clearbit command
+    system(
+      "go",
+      "build",
+      "-o", bin/"gub",
+      "-v",
+      "github.com/owahab/gogub",
+    )
   end
 
   test do
