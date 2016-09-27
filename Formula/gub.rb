@@ -15,6 +15,7 @@ class Gub < Formula
     (buildpath/"src/github.com/owahab/gogub").install Dir["*"]
 
     # set up dependencies
+    resources["github.com/google/go-github/github"]
     Language::Go.stage_deps resources, buildpath/"src"
 
     # install clearbit command
