@@ -7,6 +7,8 @@ class Gub < Formula
   depends_on "go" => :build
 
   def install
+    ENV["GOPATH"] = buildpath
+
     system(
       "go",
       "get",
