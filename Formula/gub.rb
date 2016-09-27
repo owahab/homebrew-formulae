@@ -1,4 +1,6 @@
-class Gogub < Formula
+require "language/go"
+
+class Gub < Formula
   desc "The missing Github command-line"
   homepage "https://github.com/owahab/gogub"
   url "https://github.com/owahab/gogub.git",
