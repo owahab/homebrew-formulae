@@ -1,5 +1,3 @@
-require "language/go"
-
 class Gub < Formula
   desc "The missing Github command-line"
   homepage "https://github.com/owahab/gogub"
@@ -8,24 +6,14 @@ class Gub < Formula
 
   depends_on "go" => :build
 
-  go_resource "golang/crypto/ssh/terminal" do
-    url "https://github.com/golang/crypto.git", :revision => "8e06e8ddd9629eb88639aba897641bff8031f1d3"
-  end
-
-  go_resource "github.com/google/go-github/github" do
-    url "https://github.com/google/go-github.git", :revision => "94a3cd9f531888fe4a03487276c0adb887428e77"
-  end
-
   def install
-    ENV["GOPATH"] = buildpath
+    system(
+      "go",
+      "get",
+      "-d",
+      "./..."
+    )
 
-    # set up clearbit package
-    (buildpath/"src/github.com/owahab/gogub").install Dir["*"]
-
-    # set up dependencies
-    Language::Go.stage_deps resources, buildpath/"src"
-
-    # install clearbit command
     system(
       "go",
       "build",
